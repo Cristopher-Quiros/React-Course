@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { useState } from "react"
+import { Message } from "./Message"
 
 
 export const SimpleForm = () => {
@@ -18,10 +19,18 @@ export const SimpleForm = () => {
             [ name ]: value
         })
     }
+    useEffect( () => {
+       // console.log('useEffect Called!')
+    }, []) // Solo se va a disparar una vez con un arreglo vacio
 
     useEffect( () => {
-        
-    })
+       // console.log('FormState Changed!')
+    }, [formState]) 
+
+    useEffect( () => {
+       // console.log('Email Changed!')
+    }, [ email ]) 
+    
   return (
     <>
         <h1> Formulario Simple</h1>
@@ -44,6 +53,10 @@ export const SimpleForm = () => {
             email={ email }
             onChange={ onInputChange }
         />
+
+        {
+           ( username === 'strider2') && <Message/>
+        }
     </>
   )
 }
