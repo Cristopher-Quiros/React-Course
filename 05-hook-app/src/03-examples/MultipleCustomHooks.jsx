@@ -1,11 +1,19 @@
+import { useCounter } from "../hooks/useCounter";
 import { useFetch } from "../hooks/useFetch"
 
 
 export const MultipleCustomHooks = () => {
 
-  const { data, isLoading, hasError } = useFetch('https://api.breakingbadquotes.xyz/v1/quotes')
+  const { counter, increment, reset} = useCounter(1)
+
+  const { state, data, isLoading, hasError } = useFetch(`https://api.breakingbadquotes.xyz/v1/quotes/${counter}`)
 
   const { author, quote } = !!data && data[0];
+
+  const getNextQuote = () => {
+    if ( counter >= 5) reset()
+    else increment(1)
+  }
 
   return (
     
@@ -27,7 +35,7 @@ export const MultipleCustomHooks = () => {
             </blockquote>)
         }
 
-        <button className="btn btn-primary">
+        <button className="btn btn-primary" onClick={ getNextQuote } disabled={ isLoading }>
           Next quote
         </button>
     </>
